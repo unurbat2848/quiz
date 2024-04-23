@@ -10,6 +10,8 @@ coverage
 
 #idea files
 .idea
+# env files
+.env
 
 # Benchmarking
 benchmarks/graphs
