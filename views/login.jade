@@ -1,0 +1,42 @@
+doctype html
+html
+    head
+        link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css')
+        body.login-page
+            .login-box
+                .login-logo
+                    a(href='../../index2.html')
+                    b QuizEm
+                    
+                .card
+                    .card-body.login-card-body
+                        p.login-box-msg Sign in to start your session 
+                        h1=error
+                        form(action='/users/login' method='post')
+                            .input-group.mb-3
+                                input.form-control(type='email' name='email' placeholder='Email')
+                                .input-group-append
+                                    .input-group-text
+                                        span.fas.fa-envelope
+                            .input-group.mb-3
+                                input.form-control(type='password' name='password' placeholder='Password')
+                                .input-group-append
+                                    .input-group-text
+                                        span.fas.fa-lock
+                            .row
+                            .col-8
+                                .icheck-primary
+                                input#remember(type='checkbox')
+                                label(for='remember')
+                                    | Remember Me
+                            .col-4
+                                button.btn.btn-primary.btn-block(type='submit') Sign In
+                        
+                        p.mb-1
+                            a(href='forgot-password.html') I forgot my password
+                        
+<script src="https://kit.fontawesome.com/f3618fe98e.js" crossorigin="anonymous"></script>
+
+script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')
+
+script(src='https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js')

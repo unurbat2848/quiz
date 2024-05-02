@@ -1,13 +1,29 @@
-require("dotenv").config(); // loading env variables
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
 // MIDDLEWARE FOR AUTHORIZATION (MAKING SURE THEY ARE LOGGED IN)
+
+const restrict = async(req, res, next) => {
+    try {
+        if (req.session.user) {
+            next();
+        } else {
+            req.session.error = 'Access denied!';
+            res.redirect('/login');
+        }
+    } catch (error) {
+        req.session.error = error;
+        res.redirect('/login');
+    }
+}
+
+
+
 const isLoggedIn = async (req, res, next) => {
     try {
-        // check if auth header exists
         if (req.headers.authorization) {
-            // parse token from header
-            const token = req.headers.authorization.split(" ")[1]; //split the header and get the token
+            //split the header and get the token
+            const token = req.headers.authorization.split(" ")[1];
             if (token) {
                 const payload = await jwt.verify(token, process.env.SECRET);
                 if (payload) {
@@ -28,7 +44,7 @@ const isLoggedIn = async (req, res, next) => {
     }
 };
 
-// export custom middleware
+
 module.exports = {
-    isLoggedIn,
+    isLoggedIn, restrict,
 };

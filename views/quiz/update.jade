@@ -1,0 +1,42 @@
+extends ../layout
+block content
+  section.content-header
+    .container-fluid 
+      .row.mb-2
+        .col-sm-6
+          h1 Quiz
+        .col-sm-6
+          ol.breadcrumb.float-sm-right
+            li.breadcrumb-item
+              a(href='#') Home
+            li.breadcrumb-item.active Quiz
+
+  section.content
+    .container-fluid
+      .row
+        .col-md-12
+          .card.card-primary
+            .card-header
+                h3.card-title Update quiz
+            form
+                .card-body
+                .form-group
+                    label(for='exampleInputEmail1') Email address
+                    input#exampleInputEmail1.form-control(type='email' placeholder='Enter email')
+                .form-group
+                    label(for='exampleInputPassword1') Password
+                    input#exampleInputPassword1.form-control(type='password' placeholder='Password')
+                .form-group
+                    label(for='exampleInputFile') File input
+                    .input-group
+                    .custom-file
+                        input#exampleInputFile.custom-file-input(type='file')
+                        label.custom-file-label(for='exampleInputFile') Choose file
+                    .input-group-append
+                        span.input-group-text Upload
+                .form-check
+                    input#exampleCheck1.form-check-input(type='checkbox')
+                    label.form-check-label(for='exampleCheck1') Check me out
+                .card-footer
+                button.btn.btn-primary(type='submit') Submit
+

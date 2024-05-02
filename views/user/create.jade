@@ -1,0 +1,51 @@
+extends ../layout
+block content
+    section.content-header
+        .container-fluid 
+            .row.mb-2
+                .col-sm-6
+                    h1 Users
+                .col-sm-6
+                    ol.breadcrumb.float-sm-right
+                        li.breadcrumb-item
+                            a(href='#') Home
+                        li.breadcrumb-item.active Users
+
+    section.content
+        .container-fluid
+            .row
+                .col-md-12
+                    .card
+                        .card-header
+                            h3.card-title Create user
+                        form(action='/users/create' method='post')
+                            .card-body
+                                .row 
+                                    .col-md-6
+                                        .form-group
+                                            label(for='username') Username
+                                            input#username.form-control(type='text' name='username' placeholder='Enter Username')
+                                    .col-md-6
+                                        .form-group
+                                            label(for='email') Email address
+                                            input#email.form-control(type='email' name='email' placeholder='Enter email')
+                                    .col-md-6
+                                        .form-group
+                                            label(for='password') Password
+                                            input#password.form-control(type='text' name='password' placeholder='Enter Password')
+                                    .col-md-6
+                                        .form-group
+                                            label(for='role') Role
+                                            select#role.form-control(placeholder='Enter Role' name='role')
+                                                option(value='') Select Role
+                                                option(value='Admin') Admin
+                                                option(value='Teacher') Teacher
+                                    .col-md-6
+                                        .form-check
+                                            input#isActive.form-check-input(type='checkbox' name='isActive')
+                                            label.form-check-label(for='isActive') Active
+                                    .col-md-6
+                                    .col-md-12
+                                        .card-footer
+                                            button.btn.btn-primary(type='submit') Submit
+
