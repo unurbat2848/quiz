@@ -18,6 +18,11 @@ block content
           .card
             .card-header
               h3.card-title User list
+              .card-tools
+                .input-group-append
+                  a.btn.btn-success.btn-sm(href='/users/create')
+                    i.fas.fa-plus
+                    | create
             .card-body
               table.table.table-bordered
                 thead
@@ -25,40 +30,25 @@ block content
                     th(style='width: 10px') #
                     th Name
                     th Email
+                    th Status
                     th(style='width: 40px') Role
+                    th(style='width: 90px') #
                 tbody
+                each user in users
                   tr
                     td 1.
-                    td Update software
+                    td= user.username
+                    td= user.email
                     td
-                      .progress.progress-xs
-                        .progress-bar.progress-bar-danger(style='width: 55%')
+                      span.badge.bg-success Active
                     td
-                      span.badge.bg-danger 55%
-                  tr
-                    td 2.
-                    td Clean database
+                      span.badge.bg-danger=user.role
                     td
-                      .progress.progress-xs
-                        .progress-bar.bg-warning(style='width: 70%')
-                    td
-                      span.badge.bg-warning 70%
-                  tr
-                    td 3.
-                    td Cron job running
-                    td
-                      .progress.progress-xs.progress-striped.active
-                        .progress-bar.bg-primary(style='width: 30%')
-                    td
-                      span.badge.bg-primary 30%
-                  tr
-                    td 4.
-                    td Fix and squish bugs
-                    td
-                      .progress.progress-xs.progress-striped.active
-                        .progress-bar.bg-success(style='width: 90%')
-                    td
-                      span.badge.bg-success 90%
+                      a.btn.btn-info.btn-sm(href='/users/#{user._id}')
+                        i.fas.fa-pencil-alt
+                      a.btn.btn-danger.btn-sm(href='/users/delete')
+                        i.fas.fa-trash
+                  
             .card-footer.clearfix
               ul.pagination.pagination-sm.m-0.float-right
                 li.page-item

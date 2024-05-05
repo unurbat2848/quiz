@@ -5,7 +5,7 @@ const User = require("../model/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { SECRET = "secret" } = process.env;
-const { restrict } = require("./middleware"); 
+const { restrict } = require("./middleware");
 
 
 router.post("/create", async (req, res) => {
@@ -19,7 +19,7 @@ router.post("/create", async (req, res) => {
 });
 
 router.put("/:id", restrict, async (req, res) => {
-  const { username } = req.session.user.username; 
+  const { username } = req.session.user.username;
   req.body.username = username;
   const _id = req.params.id;
   res.json(
@@ -61,7 +61,10 @@ router.post("/login", async (req, res) => {
 
 
 router.get('/', function (req, res, next) {
-  res.render('user/index', { title: 'Users' });
+  User.find({}).then(function (users) {
+    res.render('user/index', { title: 'Users', users: users });
+  });
+
 });
 
 router.get('/create', function (req, res, next) {
@@ -69,8 +72,9 @@ router.get('/create', function (req, res, next) {
 });
 
 router.get('/:id', function (req, res, next) {
-  const user = User.findOne({ _id: req.params.id });
-  res.render('user/update', { title: 'Users', user: user });
+  User.findOne({ _id: req.params.id }).then(function (user) {
+    res.render('user/update', { title: 'Users', user: user });
+  });
 });
 
 

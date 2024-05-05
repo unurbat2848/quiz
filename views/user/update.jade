@@ -28,7 +28,7 @@ block content
                                     .col-md-6
                                         .form-group
                                             label(for='email') Email address
-                                            input#email.form-control(type='email' name='email' placeholder='Enter email')
+                                            input#email.form-control(type='email' name='email' value='#{user.email}' placeholder='Enter email')
                                     .col-md-6
                                         .form-group
                                             label(for='password') Password
@@ -38,8 +38,8 @@ block content
                                             label(for='role') Role
                                             select#role.form-control(placeholder='Enter Role' name='role')
                                                 option(value='') Select Role
-                                                option(value='Admin') Admin
-                                                option(value='Teacher') Teacher
+                                                option(value='Admin' selected=user.role=='Admin') Admin
+                                                option(value='Teacher' selected=user.role=='Teacher') Teacher
                                     .col-md-6
                                         .form-check
                                             input#isActive.form-check-input(type='checkbox' name='isActive')
@@ -48,4 +48,6 @@ block content
                                     .col-md-12
                                         .card-footer
                                             button.btn.btn-primary(type='submit') Submit
+                                            &nbsp;&nbsp;
+                                            button.btn.btn-secondary(type='button') Cancel
 

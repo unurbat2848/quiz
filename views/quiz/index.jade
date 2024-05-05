@@ -4,12 +4,12 @@ block content
     .container-fluid 
       .row.mb-2
         .col-sm-6
-          h1 Users
+          h1 Quiz
         .col-sm-6
           ol.breadcrumb.float-sm-right
             li.breadcrumb-item
               a(href='#') Home
-            li.breadcrumb-item.active Users
+            li.breadcrumb-item.active Quiz
 
   section.content
     .container-fluid
@@ -27,14 +27,13 @@ block content
                     th Email
                     th(style='width: 40px') Role
                 tbody
+                  each user in users
                   tr
                     td 1.
-                    td Update software
+                    td=user.username
+                    td=user.email
                     td
-                      .progress.progress-xs
-                        .progress-bar.progress-bar-danger(style='width: 55%')
-                    td
-                      span.badge.bg-danger 55%
+                      span.badge.bg-danger=user.role
                   tr
                     td 2.
                     td Clean database

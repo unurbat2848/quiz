@@ -1,8 +1,9 @@
 var express = require('express');
+const { restrict } = require("./middleware"); 
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', restrict, function(req, res, next) {
   res.render('dashboard', { title: 'Express' });
 });
 
