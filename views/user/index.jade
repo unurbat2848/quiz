@@ -1,0 +1,63 @@
+extends ../layout
+block content
+  section.content-header
+    .container-fluid 
+      .row.mb-2
+        .col-sm-6
+          h1 Users
+        .col-sm-6
+          ol.breadcrumb.float-sm-right
+            li.breadcrumb-item
+              a(href='#') Home
+            li.breadcrumb-item.active Users
+
+  section.content
+    .container-fluid
+      .row
+        .col-md-12
+          .card
+            .card-header
+              h3.card-title User list
+              .card-tools
+                .input-group-append
+                  a.btn.btn-success.btn-sm(href='/users/create')
+                    i.fas.fa-plus
+                    | create
+            .card-body
+              table.table.table-bordered
+                thead
+                  tr
+                    th(style='width: 10px') #
+                    th Name
+                    th Email
+                    th Status
+                    th(style='width: 40px') Role
+                    th(style='width: 90px') #
+                tbody
+                each user in users
+                  tr
+                    td 1.
+                    td= user.username
+                    td= user.email
+                    td
+                      span.badge.bg-success Active
+                    td
+                      span.badge.bg-danger=user.role
+                    td
+                      a.btn.btn-info.btn-sm(href='/users/#{user._id}')
+                        i.fas.fa-pencil-alt
+                      a.btn.btn-danger.btn-sm(href='/users/delete')
+                        i.fas.fa-trash
+                  
+            .card-footer.clearfix
+              ul.pagination.pagination-sm.m-0.float-right
+                li.page-item
+                  a.page-link(href='#') «
+                li.page-item
+                  a.page-link(href='#') 1
+                li.page-item
+                  a.page-link(href='#') 2
+                li.page-item
+                  a.page-link(href='#') 3
+                li.page-item
+                  a.page-link(href='#') »
