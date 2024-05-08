@@ -18,15 +18,23 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.put("/:id", restrict, async (req, res) => {
-  const { username } = req.session.user.username;
-  req.body.username = username;
+router.post("/update/:id", restrict, async (req, res) => {
   const _id = req.params.id;
-  res.json(
-    await user.updateOne({ username, _id }, req.body, { new: true }).catch(
-      (error) => res.status(400).json({ error })
-    )
-  );
+  req.body.password = await bcrypt.hash(req.body.password, 10);
+  var message = '';
+  await User.findByIdAndUpdate(_id, req.body, { useFindAndModify: false }).then(data => {
+    if (!data) {
+      message = 'User not found';
+    } else {
+      message = 'User updated successfully.';
+    }
+  }).catch(
+    error => {
+      message = error;
+    })
+  res.locals.message = message;
+  res.redirect('/users');
+
 });
 
 router.post("/login", async (req, res) => {

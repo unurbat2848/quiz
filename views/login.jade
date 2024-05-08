@@ -4,13 +4,16 @@ html
         link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css')
         body.login-page
             .login-box
-                .login-logo
-                    a(href='../../index2.html')
-                    b QuizEm
+                
+                    
                     
                 .card
                     .card-body.login-card-body
-                        p.login-box-msg Sign in to start your session 
+                        .login-logo
+                            img.brand-image.img-circle.elevation-3(src='/images/logo.png' width='110px'  alt='AdminLTE Logo' style='opacity: .8')
+                            
+                            a(href='../../index2.html')
+                        p.login-box-msg  Sign in to start your session 
                         h1=error
                         form(action='/users/login' method='post')
                             .input-group.mb-3
@@ -24,16 +27,11 @@ html
                                     .input-group-text
                                         span.fas.fa-lock
                             .row
-                            .col-8
-                                .icheck-primary
-                                input#remember(type='checkbox')
-                                label(for='remember')
-                                    | Remember Me
-                            .col-4
-                                button.btn.btn-primary.btn-block(type='submit') Sign In
-                        
-                        p.mb-1
-                            a(href='forgot-password.html') I forgot my password
+                                .col-4
+                                    button.btn.btn-primary.btn-block(type='submit') Sign In
+                                .col-6
+                                    p.mb-1
+                                        a(href='forgot-password.html') I forgot my password
                         
 <script src="https://kit.fontawesome.com/f3618fe98e.js" crossorigin="anonymous"></script>
 

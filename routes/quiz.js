@@ -1,62 +1,72 @@
-const { Router } = require("express"); 
-const Quiz = require("../model/Quiz"); 
-const { restrict } = require("./middleware"); 
+const { Router } = require("express");
+const Quiz = require("../model/Quiz");
+const { restrict } = require("./middleware");
 
 const router = Router();
 
 router.get("/", restrict, async (req, res) => {
-    const { username } = req.session.user.username; 
-    const quizList = Quiz.find({ username});
+  const { username } = req.session.user.username;
+  Quiz.find({}).then(function (quizList) {
     res.render('quiz/index', { title: 'Quiz', quizList: quizList });
-    /*
-    res.json(
-      await Quiz.find({ username }).catch((error) =>
-        res.status(400).json({ error })
-      )
-    );
-    */
-    
   });
-  
-  router.get("/:id", restrict, async (req, res) => {
-    const { username } = req.session.user.username;
-    const _id = req.params.id; 
-    res.json(
-      await Quiz.findOne({ username, _id }).catch((error) =>
-        res.status(400).json({ error })
-      )
-    );
+});
+
+router.get('/create', function (req, res, next) {
+  res.render('quiz/create', { title: 'Quiz' });
+});
+
+router.get("/:id", restrict, async (req, res) => {
+  const { username } = req.session.user.username;
+  const _id = req.params.id;
+  await Quiz.findOne({ _id }).then(data => {
+    res.render('quiz/update', { title: 'Quiz', quiz: data });
+  }).catch((error) =>
+    res.status(400).json({ error })
+  )
+
+});
+
+router.post("/create", restrict, async (req, res) => {
+  req.body.userId = req.session.user._id;
+  await Quiz.create(req.body).then(data => {
+    if (!data) {
+      message = 'An error while creating quiz';
+    } else {
+      message = 'Quiz successfully created.';
+    }
+  }).catch(
+    error => {
+      message = error;
+    })
+  res.locals.message = message;
+  res.redirect('/quiz');
+});
+
+router.post("/update/:id", restrict, async (req, res) => {
+  const _id = req.params.id;
+  await Quiz.findByIdAndUpdate(_id, req.body, { useFindAndModify: false }).then(data => {
+    if (!data) {
+      message = 'Quiz not found';
+    } else {
+      message = 'Quiz updated successfully.';
+    }
+  }).catch(
+    error => {
+      message = error;
+    })
+  res.locals.message = message;
+  res.redirect('/quiz');
+});
+
+router.delete("/:id", restrict, async (req, res) => {
+  const { username } = req.session.user.username;
+  const _id = req.params.id;
+  var message = '';
+  await Quiz.remove({ _id }).catch((error) => {
+    message = error;
   });
-  
-  router.post("/", restrict, async (req, res) => {
-    const { username } = req.session.user.username; 
-    req.body.username = username; 
-    res.json(
-      await Quiz.create(req.body).catch((error) =>
-        res.status(400).json({ error })
-      )
-    );
-  });
-  
-  router.put("/:id", restrict, async (req, res) => {
-    const { username } = req.session.user.username; 
-    req.body.username = username;
-    const _id = req.params.id;
-    res.json(
-      await Quiz.updateOne({ username, _id }, req.body, { new: true }).catch(
-        (error) => res.status(400).json({ error })
-      )
-    );
-  });
-  
-  router.delete("/:id", restrict, async (req, res) => {
-    const { username } = req.session.user.username; 
-    const _id = req.params.id;
-    res.json(
-      await Quiz.remove({ username, _id }).catch((error) =>
-        res.status(400).json({ error })
-      )
-    );
-  });
-  
-  module.exports = router
+  res.locals.message = message;
+  res.redirect('/quiz');
+});
+
+module.exports = router

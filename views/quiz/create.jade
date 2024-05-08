@@ -17,26 +17,44 @@ block content
         .col-md-12
           .card.card-primary
             .card-header
-                h3.card-title Create quiz
-            form
-                .card-body
-                .form-group
-                    label(for='exampleInputEmail1') Email address
-                    input#exampleInputEmail1.form-control(type='email' placeholder='Enter email')
-                .form-group
-                    label(for='exampleInputPassword1') Password
-                    input#exampleInputPassword1.form-control(type='password' placeholder='Password')
-                .form-group
-                    label(for='exampleInputFile') File input
-                    .input-group
-                    .custom-file
-                        input#exampleInputFile.custom-file-input(type='file')
-                        label.custom-file-label(for='exampleInputFile') Choose file
-                    .input-group-append
-                        span.input-group-text Upload
-                .form-check
-                    input#exampleCheck1.form-check-input(type='checkbox')
-                    label.form-check-label(for='exampleCheck1') Check me out
-                .card-footer
-                button.btn.btn-primary(type='submit') Submit
+              h3.card-title Create quiz
+            form(action='/quiz/create' method='post')
+              .card-body
+                .row 
+                  .col-md-12
+                    .form-group
+                      label(for='title') Title
+                      input#title.form-control(type='text' name='title' placeholder='Title')
+                  .col-md-12
+                    .form-group
+                      label(for='description') Description
+                      textarea#description.form-control(name='description' placeholder='Description')
+                  .col-md-6
+                    .form-group
+                      label(for='type') Type
+                      select#type.form-control( name='type')
+                        option(value='') Select type
+                        option(value='Multiplechoice') Multiplechoice
+                        option(value='FillGap') Fill Gap
+                  .col-md-6
+                    .form-group
+                      label(for='category') Category
+                      select#type.form-control( name='category')
+                        option(value='') Select category
+                        option(value='Education') Education
+                        option(value='Gaming') Gaming
+                  .col-md-6
+                    .form-group
+                      label(for='difficulty') Difficulity level
+                      select#type.form-control( name='difficulty')
+                        option(value='') Select level
+                        option(value='easy') Easy
+                        option(value='medium') Medium
+                        option(value='hard') Hard
+                  .col-md-6
+                  .col-md-12
+                    .card-footer
+                      button.btn.btn-primary(type='submit') Submit 
+                      &nbsp;&nbsp;
+                      button.btn.btn-secondary(type='button') Cancel
 
