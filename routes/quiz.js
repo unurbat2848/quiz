@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const Quiz = require("../model/Quiz");
+const QRCode = require('qrcode');
 const { restrict } = require("./middleware");
 
 const router = Router();
@@ -15,8 +16,15 @@ router.get('/create', function (req, res, next) {
   res.render('quiz/create', { title: 'Quiz' });
 });
 
-router.get('/qrcode', function (req, res, next) {
-  res.render('quiz/qrcode', { title: 'Quiz QRCODE' });
+router.get('/qrcode', async (req, res, next) => {
+  try {
+    const url = req.query.url || 'https://example.com';
+    const qrCodeImage = await QRCode.toDataURL(url);
+    res.render('quiz/qrcode', { title: 'Quiz QRCODE', qrcode: qrCodeImage });
+  } catch (err) {
+    console.error('Error generating QR code:', err);
+    res.status(500).send('Internal Server Error');
+  } s
 });
 
 router.get("/:id", restrict, async (req, res) => {
