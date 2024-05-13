@@ -1,0 +1,35 @@
+html
+    head
+        
+        
+
+    body
+        h1 QR Code Page
+        ul#result
+        form#messageForm
+            input#email
+            input#username
+            button(type="submit") Login
+        
+        script(src='https://cdn.socket.io/4.7.5/socket.io.min.js' integrity='sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO'
+            crossorigin='anonymous')
+        script.
+            const socket = io('ws://localhost:3000');
+            socket.on('message', (message) => {
+                console.log(message);
+                if (message.status == 'success') {
+                    const messages = document.getElementById('result');
+                    const li = document.createElement('li');
+                    li.textContent = `${message.data.email}: ${message.data.username}`;
+                    messages.appendChild(li);
+                }
+            });
+            document.getElementById('messageForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const username = document.getElementById('username').value;
+                if (email !== '' && username !== '') {
+                    socket.emit('message', { email: email, username: username });
+                }
+            });
+

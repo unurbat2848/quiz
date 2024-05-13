@@ -4,12 +4,12 @@ block content
     .container-fluid 
       .row.mb-2
         .col-sm-6
-          h1 Users
+          h1 Quiz
         .col-sm-6
           ol.breadcrumb.float-sm-right
             li.breadcrumb-item
               a(href='#') Home
-            li.breadcrumb-item.active Users
+            li.breadcrumb-item.active Student
 
   section.content
     .container-fluid
@@ -17,10 +17,10 @@ block content
         .col-md-12
           .card
             .card-header
-              h3.card-title User list
+              h3.card-title Student list
               .card-tools
                 .input-group-append
-                  a.btn.btn-success.btn-sm(href='/users/create')
+                  a.btn.btn-success.btn-sm(href='/quiz/create')
                     i.fas.fa-plus
                     | create
             .card-body
@@ -28,28 +28,25 @@ block content
                 thead
                   tr
                     th(style='width: 10px') #
-                    th Name
-                    th Email
-                    th Status
-                    th(style='width: 40px') Role
-                    th(style='width: 90px') #
+                    th Title
+                    th Description
+                    th(style='width: 40px') Status
+                    th #
                 tbody
-                each user in users
+                each quiz in quizList
                   tr
                     td 1.
-                    td= user.username
-                    td= user.email
+                    td=quiz.title
+                    td=quiz.description
                     td
-                      if user.isActive
-                        span.badge.bg-success Active
+                      if quiz.isActive
+                        span.badge.bg-success=Active
                       else 
-                        span.badge.bg-danger Deactive
+                        span.badge.bg-danger=Deactive
                     td
-                      span.badge.bg-danger=user.role
-                    td
-                      a.btn.btn-info.btn-sm(href='/users/#{user._id}')
+                      a.btn.btn-info.btn-sm(href='/quiz/#{user._id}')
                         i.fas.fa-pencil-alt
-                      a.btn.btn-danger.btn-sm(href='/users/delete')
+                      a.btn.btn-danger.btn-sm(href='/quiz/delete')
                         i.fas.fa-trash
                   
             .card-footer.clearfix

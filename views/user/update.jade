@@ -18,7 +18,7 @@ block content
                     .card
                         .card-header
                             h3.card-title Update user
-                        form(action='/users/update' method='post')
+                        form(action='/users/update/#{user._id}' method='post')
                             .card-body
                                 .row 
                                     .col-md-6
@@ -49,5 +49,5 @@ block content
                                         .card-footer
                                             button.btn.btn-primary(type='submit') Submit
                                             &nbsp;&nbsp;
-                                            button.btn.btn-secondary(type='button') Cancel
+                                            a.btn.btn-secondary(href='/user/') Cancel
 

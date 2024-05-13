@@ -25,25 +25,50 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4
               i.right.fas.fa-angle-left
           ul.nav.nav-treeview
             li.nav-item
-              a.nav-link.active(href='/users')
-                i.far.fa-circle.nav-icon
-                p Users
+              if title =='Users'
+                a.nav-link.active(href='/users')
+                  i.far.fa-circle.nav-icon
+                  p Users
+              else 
+                a.nav-link(href='/users')
+                  i.far.fa-circle.nav-icon
+                  p Users
             li.nav-item
-              a.nav-link(href='/quiz')
-                i.far.fa-circle.nav-icon
-                p Quiz
+              if title =='Quiz'
+                a.nav-link.active(href='/quiz')
+                  i.far.fa-circle.nav-icon
+                  p Quiz
+              else 
+                a.nav-link(href='/quiz')
+                  i.far.fa-circle.nav-icon
+                  p Quiz
             li.nav-item
-              a.nav-link(href='/quiz')
-                i.far.fa-circle.nav-icon
-                p Students
+              if title =='Student'
+                a.nav-link.active(href='/student')
+                  i.far.fa-circle.nav-icon
+                  p Students
+              else 
+                a.nav-link(href='/student')
+                  i.far.fa-circle.nav-icon
+                  p Students
             li.nav-item
-              a.nav-link(href='/quiz')
-                i.far.fa-circle.nav-icon
-                p Category
+              if title =='Student'
+                a.nav-link.active(href='/category')
+                  i.far.fa-circle.nav-icon
+                  p Category
+              else 
+                a.nav-link(href='/category')
+                  i.far.fa-circle.nav-icon
+                  p Category
             li.nav-item
-              a.nav-link(href='/quiz')
-                i.far.fa-circle.nav-icon
-                p Report
+              if title =='Student'
+                a.nav-link.active(href='/report')
+                  i.far.fa-circle.nav-icon
+                  p Report
+              else 
+                a.nav-link(href='/report')
+                  i.far.fa-circle.nav-icon
+                  p Report
         li.nav-item
           a.nav-link(href='#')
             i.nav-icon.fas.fa-th

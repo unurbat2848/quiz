@@ -17,47 +17,46 @@ block content
         .col-md-12
           .card
             .card-header
-              h3.card-title User list
+              h3.card-title Quiz list
+              .card-tools
+                .input-group-append
+                  a.btn.btn-success.btn-sm(href='/quiz/create')
+                    i.fas.fa-plus
+                    | create
             .card-body
               table.table.table-bordered
                 thead
                   tr
                     th(style='width: 10px') #
-                    th Name
-                    th Email
-                    th(style='width: 40px') Role
+                    th Title
+                    th Description
+                    th Questions
+                    th(style='width: 40px') Status
+                    th #
                 tbody
-                  each user in users
+                each quiz in quizList
                   tr
                     td 1.
-                    td=user.username
-                    td=user.email
+                    td=quiz.title
+                    td=quiz.description
                     td
-                      span.badge.bg-danger=user.role
-                  tr
-                    td 2.
-                    td Clean database
+                      if quiz.questions.length
+                        a(href='/questions/#{quiz._id}') #{quiz.questions.length} questions
+                       
+                      
                     td
-                      .progress.progress-xs
-                        .progress-bar.bg-warning(style='width: 70%')
+                      if quiz.isActive
+                        span.badge.bg-success Active
+                      else 
+                        span.badge.bg-danger Deactive
                     td
-                      span.badge.bg-warning 70%
-                  tr
-                    td 3.
-                    td Cron job running
-                    td
-                      .progress.progress-xs.progress-striped.active
-                        .progress-bar.bg-primary(style='width: 30%')
-                    td
-                      span.badge.bg-primary 30%
-                  tr
-                    td 4.
-                    td Fix and squish bugs
-                    td
-                      .progress.progress-xs.progress-striped.active
-                        .progress-bar.bg-success(style='width: 90%')
-                    td
-                      span.badge.bg-success 90%
+                      a.btn.btn-info.btn-sm(href='/questions/create/#{quiz._id}')
+                        i.fas.fa-plus 
+                      a.btn.btn-info.btn-sm(href='/quiz/#{quiz._id}')
+                        i.fas.fa-pencil-alt
+                      a.btn.btn-danger.btn-sm(href='/quiz/delete')
+                        i.fas.fa-trash
+                  
             .card-footer.clearfix
               ul.pagination.pagination-sm.m-0.float-right
                 li.page-item
