@@ -41,16 +41,17 @@ block content
                     td=quiz.description
                     td
                       if quiz.questions.length
-                        a(href='/questions/#{quiz._id}')=quiz.questions.length
+                        a(href='/questions/#{quiz._id}') #{quiz.questions.length} questions
                        
-                      a.btn.btn-info.btn-sm(href='/questions/create/#{quiz._id}')
-                        i.fas.fa-plus 
+                      
                     td
                       if quiz.isActive
                         span.badge.bg-success Active
                       else 
                         span.badge.bg-danger Deactive
                     td
+                      a.btn.btn-info.btn-sm(href='/questions/create/#{quiz._id}')
+                        i.fas.fa-plus 
                       a.btn.btn-info.btn-sm(href='/quiz/#{quiz._id}')
                         i.fas.fa-pencil-alt
                       a.btn.btn-danger.btn-sm(href='/quiz/delete')

@@ -5,6 +5,15 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+const { createServer } = require('node:http');
+var cors = require('cors');
+const app = express();
+var cors = require('cors');
+const server = createServer(app);
+const { Server } = require('socket.io');
+//const webSocket = require('ws').Server;
+//const ws = new webSocket({httpServer: server, port: 8081})
+const { studentController } = require('./controllers/student.controller');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -15,7 +24,38 @@ var questionRouter = require('./routes/question');
 
 
 
-var app = express();
+
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  }
+});
+io.on('connection', (socket) => {
+
+  socket.isAlive = true;
+  socket.on('pong', () => {
+    socket.isAlive = true;
+  })
+  socket.on('message', (data) => {
+    studentController(io, socket, data)
+  })
+  socket.on('start_quiz', (data) => {
+    quizController(io, socket, data)
+  })
+  socket.on('login', (data) => {
+    loginController(io, socket, data)
+  })
+  socket.on('close', () => {
+    console.log("I lost a client");
+
+  });
+
+
+  console.log("One more client connected");
+});
+
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,7 +67,9 @@ app.use(session({
   secret: 'shhhh, very secret'
 }));
 
-app.use(function(req, res, next){
+
+app.use(cors());
+app.use(function (req, res, next) {
   var err = req.session.error;
   var msg = req.session.success;
   delete req.session.error;
@@ -53,12 +95,12 @@ app.use('/student', studentRouter);
 app.use('/questions', questionRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -66,6 +108,10 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+server.listen(3000, () => {
+  console.log('server running at http://localhost:3000');
 });
 
 module.exports = app;

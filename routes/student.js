@@ -8,6 +8,13 @@ router.get("/", restrict, async (req, res) => {
     res.render('student/index', { title: 'Student'});
     //});    
   });
+
+router.get("/register", async (req, res) => {
+  try {
+    const student = await Student.create(req.body);
+  } catch (error) {
+  }
+});  
   
 
 module.exports = router

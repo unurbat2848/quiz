@@ -6,7 +6,14 @@ const router = Router();
 router.get("/create/:id", restrict, async (req, res) => {
     const _id = req.params.id;
     Quiz.findOne({ _id }).then(function (quiz) {
-        res.render('questions/create', { title: 'Questions', quiz: quiz });
+        res.render('questions/create', { title: 'Quiz', quiz: quiz });
+    });
+});
+
+router.get("/:id", restrict, async (req, res) => {
+    const _id = req.params.id;
+    Quiz.findOne({ _id }).then(function (quiz) {
+        res.render('questions/index', { title: 'Quiz', quiz: quiz });
     });
 });
 

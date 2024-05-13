@@ -1,0 +1,67 @@
+extends ../layout
+
+block content
+    section.content-header
+        .container-fluid 
+            .row.mb-2
+                .col-sm-6
+                    h1 #{quiz.title} - Question
+                .col-sm-6
+                    ol.breadcrumb.float-sm-right
+                        li.breadcrumb-item
+                            a(href='#') Home
+                        li.breadcrumb-item.active Questions
+
+    section.content
+        .container-fluid
+            .row
+                .col-md-12
+                    .card.card-primary.card-outline
+                        .card-header
+                            h3.card-title Update question
+                        form(action='/questions/update/#{quiz._id}/#{question._id}' method='post')
+                            .card-body
+                                .row 
+                                    .col-md-12
+                                        .form-group
+                                            label(for='title') Title
+                                            input#title.form-control(type='text' name='title' placeholder='Title' value="#{question.title}")
+                                    .col-md-12
+                                        .form-group
+                                            label(for='description') Description
+                                            textarea#description.form-control(name='description' placeholder='Description')
+                                    .col-md-6
+
+                                        .form-group
+                                            label(for='description') Answer options: 
+                                            #option_container
+                                                #0_container.input-group.options
+                                                    .input-group-prepend
+                                                        span.input-group-text
+                                                            input#correct_0(type='radio' value="0" name='correctAnswer')
+                                                    input#option_0.form-control(type='text' name='option' placeholder='Option 1')
+                                                    span.input-group-append
+                                                        button.btn.btn-danger.btn-flat.remove_option(type="button"  id="0" ) Delete 
+
+                                                #1_container.input-group.options.mt-4.mb-2
+                                                    .input-group-prepend
+                                                        span.input-group-text
+                                                            input#correct_1(type='radio' value="1" name='correctAnswer')
+                                                    input#option_1.form-control(type='text' name='option' placeholder='Option 2')
+                                                    span.input-group-append
+                                                        button.btn.btn-danger.btn-flat.remove_option(type="button" id="1" ) Delete 
+                                        input(type="hidden" id="total_option" value="2")
+
+                                    .col-md-6
+                                        .form-group
+
+                                            button#add_option.btn.btn-success.mt-4(type='button') Add option
+
+                            .card-footer
+                                button.btn.btn-primary(type='submit') Submit 
+                                &nbsp;&nbsp;
+                                a.btn.btn-secondary(href='/questions/#{quiz._id}') Cancel
+        
+
+
+

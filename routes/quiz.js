@@ -15,6 +15,10 @@ router.get('/create', function (req, res, next) {
   res.render('quiz/create', { title: 'Quiz' });
 });
 
+router.get('/qrcode', function (req, res, next) {
+  res.render('quiz/qrcode', { title: 'Quiz QRCODE' });
+});
+
 router.get("/:id", restrict, async (req, res) => {
   const { username } = req.session.user.username;
   const _id = req.params.id;

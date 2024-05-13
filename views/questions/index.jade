@@ -1,0 +1,62 @@
+extends ../layout
+block content
+    section.content-header
+        .container-fluid 
+            .row.mb-2
+                .col-sm-6
+                    h1  #{quiz.title} - Quiz questions
+                .col-sm-6
+                    ol.breadcrumb.float-sm-right
+                        li.breadcrumb-item
+                            a(href='#') Home
+                        li.breadcrumb-item.active Quiz questions
+
+    section.content
+        .container-fluid
+            .row
+                .col-md-12
+                    .card
+                        .card-header
+                            h3.card-title #{quiz.title} - Quiz question list
+                            .card-tools
+                                .input-group-append
+                                    a.btn.btn-success.btn-sm(href='/questions/create/#{quiz._id}')
+                                        i.fas.fa-plus
+                                        | create
+                        .card-body
+                            table.table.table-bordered
+                                thead
+                                    tr
+                                        th(style='width: 10px') #
+                                        th Title
+                                        th Description
+                                        th Options
+                                        th #
+                                tbody
+                                each question in quiz.questions
+                                    tr
+                                        td 1.
+                                        td=question.title
+                                        td=question.description
+                                        td
+                                            each option in question.options
+                                                span.badge.bg-success=option.title 
+                                                | &nbsp;
+                                        td
+                                            a.btn.btn-info.btn-sm(href='/questions/update/#{quiz._id}/#{question._id}')
+                                                i.fas.fa-pencil-alt
+                                            a.btn.btn-danger.btn-sm(href='/questions/delete/#{quiz._id}/#{question._id}')
+                                                i.fas.fa-trash
+
+                        .card-footer.clearfix
+                            ul.pagination.pagination-sm.m-0.float-right
+                                li.page-item
+                                    a.page-link(href='#') «
+                                li.page-item
+                                    a.page-link(href='#') 1
+                                li.page-item
+                                    a.page-link(href='#') 2
+                                li.page-item
+                                    a.page-link(href='#') 3
+                                li.page-item
+                                    a.page-link(href='#') »
