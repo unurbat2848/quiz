@@ -39,9 +39,13 @@ io.on('connection', (socket) => {
   socket.on('message', (data) => {
     studentController(io, socket, data)
   })
+
   socket.on('start_quiz', (data) => {
-    quizController(io, socket, data)
+    // pass to all users
+    console.log(data);
+    io.emit('start_quiz', data);
   })
+
   socket.on('login', (data) => {
     loginController(io, socket, data)
   })
@@ -111,7 +115,7 @@ app.use(function (err, req, res, next) {
 });
 
 server.listen(3000, () => {
-  console.log('server running at http://localhost:3000');
+  console.log('web socket server running at http://localhost:3000');
 });
 
 module.exports = app;

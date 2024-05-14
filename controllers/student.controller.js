@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 async function studentController(io, socket, message){
     const body = message;
     const findStudent = await Student.findOne({'email': body.email, 'username': body.username});
-    if(findStudent) return socket.emit({code: 200, status: 'success', data: findStudent});
+    if(findStudent) return io.emit('message', {code: 200, status: 'success', data: findStudent});
 
     const token = jwt.sign(
         {username: body.username, email: body.email},
@@ -18,7 +18,7 @@ async function studentController(io, socket, message){
     })
     await student.save();
 
-    return socket.emit({code: 200, status: 'success', data: student});
+    return io.emit('message', {code: 200, status: 'success', data: student});
     
 }
 

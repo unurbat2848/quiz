@@ -50,6 +50,8 @@ block content
                       else 
                         span.badge.bg-danger Deactive
                     td
+                      a.btn.btn-info.btn-sm(href='/quiz/qrcode/#{quiz._id}')
+                        i.fas.fa-qr 
                       a.btn.btn-info.btn-sm(href='/questions/create/#{quiz._id}')
                         i.fas.fa-plus 
                       a.btn.btn-info.btn-sm(href='/quiz/#{quiz._id}')

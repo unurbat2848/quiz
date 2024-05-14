@@ -1,20 +1,33 @@
-const { Timestamp, ObjectId } = require("mongodb")
+const mongoose = require("mongoose")
 const { Schema, model } = require("./connection") // import Schema & model
-const OptionSchema = new Schema({
+const OptionSchema = new mongoose.Schema({
     index: { type: String, required: true },
     title: { type: String, required: true },
     isCorrect: { type: Boolean, required: true },
+},{
+    toJSON: {
+       transform: function (doc, ret) {
+           delete ret._id;
+       }
+   }
 });
-const QuestionSchema = new Schema({
+const QuestionSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: false },
     correctAnswer: { type: String, required: true },
     options: { type: [OptionSchema] }
+},{
+     toJSON: {
+        transform: function (doc, ret) {
+            delete ret._id;
+        }
+    }
 });
 
-const QuizSchema = new Schema({
+const QuizSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: false },
+    code: { type: String, required: true },
     category: { type: String, required: true },
     type: { type: String, required: true },
     difficulty: { type: String, required: true, default: "medium" },
@@ -22,8 +35,15 @@ const QuizSchema = new Schema({
     isActive: { type: Boolean, required: true, default: 0 },
     questions: { type: [QuestionSchema] },
 
-}, { timestamps: true })
+}, {
+    timestamps: true, toJSON: {
+        transform: function (doc, ret) {
+            delete ret._id;
+        }
+    }
+})
 
-const Quiz = model("Quiz", QuizSchema)
+
+const Quiz = mongoose.model("Quiz", QuizSchema)
 
 module.exports = Quiz
