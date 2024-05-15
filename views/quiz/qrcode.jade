@@ -1,22 +1,17 @@
 html
     head
-        
-        
-
     body
         h1 QR Code Page
+        img(src="#{qrcode}")
         ul#result
-        form#messageForm
-            input#email
-            input#username
-            button(type="submit") Login
-        
+        button#start_quiz(type="button") Start Quiz
+
         script(src='https://cdn.socket.io/4.7.5/socket.io.min.js' integrity='sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO'
             crossorigin='anonymous')
         script.
             const socket = io('ws://localhost:3000');
-            socket.on('message', (message) => {
-                console.log(message);
+            socket.on('join', (message) => {
+
                 if (message.status == 'success') {
                     const messages = document.getElementById('result');
                     const li = document.createElement('li');
@@ -24,12 +19,10 @@ html
                     messages.appendChild(li);
                 }
             });
-            document.getElementById('messageForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const email = document.getElementById('email').value;
-                const username = document.getElementById('username').value;
-                if (email !== '' && username !== '') {
-                    socket.emit('message', { email: email, username: username });
-                }
+            document.getElementById('start_quiz').addEventListener('click', (e) => {
+                console.log('pressed');
+                var quizObj = !{quiz}
+                socket.emit('start_quiz', {code: 200, status: 'success', quiz: quizObj}); 
+                
             });
 

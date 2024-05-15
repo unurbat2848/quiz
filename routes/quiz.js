@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const Quiz = require("../model/Quiz");
+const QRCode = require('qrcode');
 const { restrict } = require("./middleware");
-
+require("dotenv").config()
 const router = Router();
 
 router.get("/", restrict, async (req, res) => {
@@ -15,8 +16,22 @@ router.get('/create', function (req, res, next) {
   res.render('quiz/create', { title: 'Quiz' });
 });
 
-router.get('/qrcode', function (req, res, next) {
-  res.render('quiz/qrcode', { title: 'Quiz QRCODE' });
+
+router.get('/qrcode/:id', async (req, res, next) => {
+
+  const _id = req.params.id;
+  
+  await Quiz.findOne({ _id }).select(['-createdAt', '-updatedAt']).then(data => {
+    const url = process.env.FRONTEND_URL + '?code=' + data.code;
+    QRCode.toDataURL(url).then(image=>{
+      res.render('quiz/qrcode', { title: 'Quiz QRCODE', qrcode: image, quiz: JSON.stringify(data, null, '\t') });
+    });
+   
+
+  }).catch((error) =>
+    res.status(400).json({ error })
+  )
+
 });
 
 router.get("/:id", restrict, async (req, res) => {
@@ -32,6 +47,9 @@ router.get("/:id", restrict, async (req, res) => {
 
 router.post("/create", restrict, async (req, res) => {
   req.body.userId = req.session.user._id;
+  // generate random quiz code 
+  req.body.code = (Math.random() + 1).toString(36).substring(7);
+
   await Quiz.create(req.body).then(data => {
     if (!data) {
       message = 'An error while creating quiz';
