@@ -6,9 +6,7 @@ const OptionSchema = new mongoose.Schema({
     isCorrect: { type: Boolean, required: true },
 },{
     toJSON: {
-       transform: function (doc, ret) {
-           delete ret._id;
-       }
+        getters: true, virtuals: false
    }
 });
 const QuestionSchema = new mongoose.Schema({
@@ -18,9 +16,7 @@ const QuestionSchema = new mongoose.Schema({
     options: { type: [OptionSchema] }
 },{
      toJSON: {
-        transform: function (doc, ret) {
-            delete ret._id;
-        }
+        getters: true, virtuals: false
     }
 });
 
@@ -37,9 +33,7 @@ const QuizSchema = new mongoose.Schema({
 
 }, {
     timestamps: true, toJSON: {
-        transform: function (doc, ret) {
-            delete ret._id;
-        }
+        getters: true, virtuals: false
     }
 })
 

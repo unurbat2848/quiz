@@ -11,9 +11,10 @@ const app = express();
 var cors = require('cors');
 const server = createServer(app);
 const { Server } = require('socket.io');
-//const webSocket = require('ws').Server;
-//const ws = new webSocket({httpServer: server, port: 8081})
+
+
 const { studentController } = require('./controllers/student.controller');
+const { resultController } = require('./controllers/result.controller');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -36,19 +37,19 @@ io.on('connection', (socket) => {
   socket.on('pong', () => {
     socket.isAlive = true;
   })
-  socket.on('message', (data) => {
+  socket.on('result', (data) => {
+    resultController(io, socket, data)
+  })
+
+  socket.on('join', (data) => {
     studentController(io, socket, data)
   })
 
   socket.on('start_quiz', (data) => {
-    // pass to all users
-    console.log(data);
+    // passing to all users quiz data
     io.emit('start_quiz', data);
   })
 
-  socket.on('login', (data) => {
-    loginController(io, socket, data)
-  })
   socket.on('close', () => {
     console.log("I lost a client");
 

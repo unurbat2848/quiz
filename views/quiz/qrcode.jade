@@ -10,7 +10,7 @@ html
             crossorigin='anonymous')
         script.
             const socket = io('ws://localhost:3000');
-            socket.on('message', (message) => {
+            socket.on('join', (message) => {
 
                 if (message.status == 'success') {
                     const messages = document.getElementById('result');

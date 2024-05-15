@@ -21,7 +21,7 @@ router.get('/qrcode/:id', async (req, res, next) => {
 
   const _id = req.params.id;
   
-  await Quiz.findOne({ _id }).select(['-createdAt', '-updatedAt', '-_id']).then(data => {
+  await Quiz.findOne({ _id }).select(['-createdAt', '-updatedAt']).then(data => {
     const url = process.env.FRONTEND_URL + '?code=' + data.code;
     QRCode.toDataURL(url).then(image=>{
       res.render('quiz/qrcode', { title: 'Quiz QRCODE', qrcode: image, quiz: JSON.stringify(data, null, '\t') });
