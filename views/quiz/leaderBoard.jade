@@ -1,0 +1,70 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title Scan Qr
+    // Favicons
+    link(href='/assets/images/favicon.svg' rel='icon' type='image/x-icon')
+    // Google Fonts
+    link(rel='stylesheet' href='/assets/css/fonts.css')
+    // css Files
+    link(rel='stylesheet' href='/assets/css/bootstrap.min.css')
+    link(rel='stylesheet' href='/assets/css/style.css')
+    link(rel='stylesheet' href='/assets/css/media.css')
+  body
+
+    // Header
+    .quiz-navbar
+      img(src='/assets/images/brand.png' alt='Brand')
+    .body-wrapper.bg_image
+      .container-fluid
+        .row
+          .col-md-10.col-lg-8.mx-auto
+            .title_block.mt-4
+              h2.text-center.mb-4 Leaderboard
+          .col-md-10.col-lg-8.mx-auto.mt-2.mb-3
+            .row
+              .col-md-4.order-2.order-md-1
+                .card.leader_card.mt-3
+                  .medal.me-3
+                    img(src='/assets/images/2nd-prize.png' alt='1st prize')
+                  .medal_info
+                    h6.mb-0 Ali
+                    p.mb-0 95 Score
+              .col-md-4.order-1.order-md-2
+                .card.leader_card.mt-3
+                  .medal.me-3
+                    img(src='/assets/images/1st-prize.png' alt='1st prize')
+                  .medal_info
+                    h6.mb-0 Yash
+                    p.mb-0 96 Score
+              .col-md-4.order-3
+                .card.leader_card.mt-3
+                  .medal.me-3
+                    img(src='/assets/images/3rd-prize.png' alt='1st prize')
+                  .medal_info
+                    h6.mb-0 Unurbat
+                    p.mb-0 92 Score
+            .row
+              .col-md-8.mx-auto.mt-5
+                table.table.leader_table
+                  tbody
+                  each result in quiz_result
+                    tr
+                      th(scope='row') #{result.username}
+                      td #{result.total_correct} score
+
+    // Script
+    script(src='/assets/js/jquery-3.6.0.min.js')
+    script(src='https://cdn.socket.io/4.7.5/socket.io.min.js' integrity='sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO'
+      crossorigin='anonymous')
+    script.
+      const socket = io('ws://localhost:3000');
+      socket.on('reset_result', (response) => {
+        if (response.status == 'success' && response.new_result) {
+          
+          res.redirect(req.get('referer'));
+        }
+      });
+

@@ -1,10 +1,17 @@
 const { Schema, model } = require("./connection") // import Schema & model
 
+const StudentSchema = new Schema({
+    id: {type: String,  required: true},
+    email: {type: String, required: true},
+    username: {type: String,  required: true}
+
+})
+
 const ResultSchema = new Schema({
-    studentId: { type: Object, required: true },
-    quizId: { type: Object, required: true },
-    questionId: { type: Object, required: true },
-    optionId: { type: Object, required: true },
+    student: { type: StudentSchema, required: true },
+    quizId: { type: String, required: true },
+    questionId: { type: String, required: true },
+    optionId: { type: String, required: true },
     isCorrect: { type: Boolean, required: true}
 
 }, {

@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const Quiz = require("../model/Quiz");
+const Result = require("../model/Result");
 const QRCode = require('qrcode');
 const { restrict } = require("./middleware");
 require("dotenv").config()
@@ -17,16 +18,32 @@ router.get('/create', function (req, res, next) {
 });
 
 
+router.get('/leaderboard/:id', async function (req, res, next) {
+  const _id = req.params.id;
+  const quiz_result = await Result.aggregate([
+    {
+      $match: { quizId: _id }
+    },
+   {
+      $group: { _id: '$student.id', username:{$first: "$student.username"},  total_correct: { $sum: 1 } }
+    },
+    { $sort : { total_correct : -1 } }
+  ]);
+  console.log(quiz_result);
+  res.render('quiz/leaderBoard', { title: 'Quiz', quiz_result: quiz_result });
+});
+
+
 router.get('/qrcode/:id', async (req, res, next) => {
 
   const _id = req.params.id;
-  
+
   await Quiz.findOne({ _id }).select(['-createdAt', '-updatedAt']).then(data => {
     const url = process.env.FRONTEND_URL + '?code=' + data.code;
-    QRCode.toDataURL(url).then(image=>{
+    QRCode.toDataURL(url).then(image => {
       res.render('quiz/qrcode', { title: 'Quiz QRCODE', qrcode: image, quiz: JSON.stringify(data, null, '\t') });
     });
-   
+
 
   }).catch((error) =>
     res.status(400).json({ error })

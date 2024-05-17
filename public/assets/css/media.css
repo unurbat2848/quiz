@@ -1,0 +1,74 @@
+@media screen and (max-width: 1200px) {
+  p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .auth_detail h4 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .quiz-navbar .toggle-icon {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .admin_sign_portal .sign_container {
+    flex-direction: column-reverse;
+    flex: 0;
+  }
+
+  .auth_detail {
+    display: none;
+  }
+
+  .auth_detail_image {
+    display: none;
+  }
+}
+@media screen and (max-width: 575px) {
+  .result-container .result-title h5{
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .quiz-container .card .card-title,.quiz-container .card .card-header .score{
+    font-size: 16px;
+  }
+  
+  .quiz-container .card .card-header .score{
+    width: 50px;
+  }
+  
+  .quiz-container .card .card-body .btn-group label,.quiz-container .card .card-footer h6{
+    font-size: 14px;
+  }
+
+  .student-page{
+    padding: 10px;
+  }
+
+  .student-page .info-card .line .label{
+    min-width: auto;
+    text-wrap: nowrap;
+    font-size: 14px;
+  }
+  
+  .student-page .info-card .line .value{
+    font-size: 14px;
+  }
+  
+  .student-page .info-card .user-avatar{
+    width: 90px;
+    height: 90px;
+  }
+  
+  .quiz-container .title h2{
+    font-size: 20px;
+  }
+}

@@ -1,28 +1,56 @@
-html
+doctype html
+html(lang='en')
     head
+        meta(charset='UTF-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1.0')
+        title Scan Qr
+        // Favicons
+        link(href='/assets/images/favicon.svg' rel='icon' type='image/x-icon')
+        // Google Fonts
+        link(rel='stylesheet' href='/assets/css/fonts.css')
+        // css Files
+        link(rel='stylesheet' href='/assets/css/bootstrap.min.css')
+        link(rel='stylesheet' href='/assets/css/style.css')
+        link(rel='stylesheet' href='/assets/css/media.css')
     body
-        h1 QR Code Page
-        img(src="#{qrcode}")
-        ul#result
-        button#start_quiz(type="button") Start Quiz
+        // Header
+        .quiz-navbar
+            img(src='/assets/images/brand.png' alt='Brand')
+        .body-wrapper
+            .container-fluid
+                .row
+                    .col-md-6.mt-auto
+                        form.form_wrapper.mx-auto.qr_block(action='')
+                            .form_header.text-start
+                                h3.mb-0 Please scan QR code and join the quiz
 
+                            h6.text-center.mt-3.mb-2
+                            .qr_block.text-center.mb-3
+                                img(src='#{qrcode}' alt='qr-code')
+                            .input_block
+                                //input.me-3(type='text' placeholder='Enter your Quiz code' id='')
+                                button#start_quiz.btn.btn-primary(type='button') Start quiz
+                            h6 User: 
+                            #join_user_container.join_user_block
+
+                    .col-md-6
+                        img.w-100(src='/assets/images/User-join.jpg' alt='Vector')
+        // Script
+        script(src='/assets/js/jquery-3.6.0.min.js')
         script(src='https://cdn.socket.io/4.7.5/socket.io.min.js' integrity='sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO'
             crossorigin='anonymous')
         script.
             const socket = io('ws://localhost:3000');
-            socket.on('join', (message) => {
-
-                if (message.status == 'success') {
-                    const messages = document.getElementById('result');
-                    const li = document.createElement('li');
-                    li.textContent = `${message.data.email}: ${message.data.username}`;
-                    messages.appendChild(li);
-                }
+            socket.on('add_user', (response) => {
+            if (response.status == 'success') {
+                const new_user = '<div class="user_block"><img src="/assets/images/User-join.jpg" alt="user"><p class="user_name">'+response.data.username+'</p></div>';
+                $("#join_user_container").append(new_user);
+            }
             });
             document.getElementById('start_quiz').addEventListener('click', (e) => {
-                console.log('pressed');
+
                 var quizObj = !{quiz}
                 socket.emit('start_quiz', {code: 200, status: 'success', quiz: quizObj}); 
-                
-            });
+                window.location.replace("/quiz/leaderboard/"+quizObj._id);
 
+            });

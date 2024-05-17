@@ -40,12 +40,9 @@ block content
                     td= user.username
                     td= user.email
                     td
-                      if user.isActive
                         span.badge.bg-success Active
-                      else 
-                        span.badge.bg-danger Deactive
                     td
-                      span.badge.bg-danger=user.role
+                      span.badge.bg-info=user.role
                     td
                       a.btn.btn-info.btn-sm(href='/users/#{user._id}')
                         i.fas.fa-pencil-alt
