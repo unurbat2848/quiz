@@ -37,8 +37,16 @@ io.on('connection', (socket) => {
   socket.on('pong', () => {
     socket.isAlive = true;
   })
-  socket.on('result', (data) => {
+  socket.on('save_result', (data) => {
     resultController(io, socket, data)
+  })
+
+  socket.on('reset_result', (data) => {
+    io.emit('reset_result', data);
+  })
+
+  socket.on('add_user', (data) => {
+    io.emit('add_user', data);
   })
 
   socket.on('join', (data) => {
